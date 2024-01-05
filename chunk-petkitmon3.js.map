@@ -1,0 +1,1 @@
+{"version":3,"file":"chunk-petkitmon3.js","sources":["../src/pages/pokemons/index.tsx"],"sourcesContent":["import \"./style.less\";\r\n\r\nconst PokemonsPage = () => {\r\n  return <>asd</>;\r\n};\r\n\r\nexport default PokemonsPage;\r\n"],"names":["PokemonsPage"],"mappings":"yCAEA,MAAMA,EAAe,sBACV,SAAG,KAAA,CAAA"}

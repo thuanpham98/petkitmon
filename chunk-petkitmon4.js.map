@@ -1,0 +1,1 @@
+{"version":3,"file":"chunk-petkitmon4.js","sources":["../src/pages/detail-pokemon/index.tsx"],"sourcesContent":["import \"./style.less\";\r\n\r\nconst DetailPokemonPage = () => {\r\n  return <></>;\r\n};\r\n\r\nexport default DetailPokemonPage;\r\n"],"names":["DetailPokemonPage","jsx","Fragment"],"mappings":"yCAEA,MAAMA,EAAoB,IACfC,EAAA,IAAAC,WAAA,CAAA,CAAA"}
