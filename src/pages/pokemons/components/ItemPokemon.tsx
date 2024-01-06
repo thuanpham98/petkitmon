@@ -78,4 +78,3 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
     </div>
   );
 };
-
