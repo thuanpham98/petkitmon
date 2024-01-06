@@ -1,10 +1,11 @@
 import "./style.less";
-import { rdLoading, useRdApp, useRdBloc, useRdQuery } from "@radts/reactjs";
+import { useRdApp, useRdBloc, useRdQuery } from "@radts/reactjs";
 import { AppRepository } from "@/applications/services/app-repository";
 import { Environment } from "@/applications/services/environment";
-import { pokemonTypeColor } from "@/domains/pokemons";
+import { PokemonItemEntity, pokemonTypeColor } from "@/domains/pokemons";
 import { ItemPokemon } from "./components/ItemPokemon";
 import { Pagination } from "antd";
+import Loader from "@/components/loader/Loader";
 
 interface PokemonsPageState {
   selectedType: Array<string>;
@@ -35,24 +36,6 @@ const PokemonsPage = () => {
     },
   });
 
-  // const { data: dataPokemonByType, isLoading: loadingPokemonByType } =
-  //   useRdQuery({
-  //     queryKey: ["list-pokemon-by-type", state.selectedType],
-  //     enabled: !loadingType,
-  //     queryFn: async () => {
-  //       if (state.selectedType.length > 0) {
-  //         const ret = await modules
-  //           ?.get<AppRepository>("AppRepository")
-  //           .poke.listPokemonsByType(state.selectedType[0]);
-  //         return ret ?? [];
-  //       } else {
-  //         state.pokemons.clear();
-  //         setState();
-  //         return [];
-  //       }
-  //     },
-  //   });
-
   const {
     data: dataPokemons,
     isLoading: loadingPokemons,
@@ -61,6 +44,26 @@ const PokemonsPage = () => {
   } = useRdQuery({
     queryKey: ["list-pokemon-page-size", state.selectedType.length],
     queryFn: async () => {
+      if (state.selectedType.length > 0) {
+        const _callbacks = state.selectedType.map((url) => {
+          return modules
+            ?.get<AppRepository>("AppRepository")
+            .poke.listPokemonsByType(url);
+        });
+        const ret = await Promise.all(_callbacks);
+        const temp: PokemonItemEntity[] = Array.prototype.concat(...ret);
+        const uniquePokemons: PokemonItemEntity[] = [
+          ...new Set(temp.map((obj) => JSON.stringify(obj))),
+        ].map((str) => JSON.parse(str));
+
+        return {
+          total: temp.length,
+          data: uniquePokemons.splice(
+            state.page * state.pageSize,
+            state.pageSize,
+          ),
+        };
+      }
       const ret = await modules
         ?.get<AppRepository>("AppRepository")
         .poke.listPokemons({
@@ -71,17 +74,14 @@ const PokemonsPage = () => {
     },
   });
 
-  function onReset() {
-    state.selectedType = [];
-    setState();
-  }
-
   function onSelecType(name: string) {
     if (state.selectedType.includes(name)) {
       state.selectedType = state.selectedType.filter((e) => e !== name);
+      state.page = 0;
       setState();
     } else if (state.selectedType.length < 2) {
       state.selectedType.push(name);
+      state.page = 0;
       setState();
     }
   }
@@ -121,24 +121,6 @@ const PokemonsPage = () => {
               </button>
             );
           })}
-        {/* <div
-          className="item"
-          style={{
-            transition: "none",
-            transform: "none",
-            backgroundColor: "transparent",
-            boxShadow: "none",
-            cursor: "auto",
-          }}
-        >
-          <img
-            onClick={() => {
-              onReset();
-            }}
-            style={{ width: "48px", height: "48px", cursor: "pointer" }}
-            src={`${Environment.host}/icons/ic-reset.svg`}
-          />
-        </div> */}
       </div>
 
       {!loadingPokemons && dataPokemons && (
@@ -148,24 +130,17 @@ const PokemonsPage = () => {
             state.pageSize = ps;
             await refetchPokemons();
           }}
-          defaultCurrent={1}
-          defaultPageSize={50}
+          defaultCurrent={state.page}
+          defaultPageSize={state.pageSize}
           total={dataPokemons.total}
         />
       )}
 
       <div className="pokemon-page__list-pokemons ">
-        {/* {loadingPokemonByType && !dataPokemonByType ? (
-          <></>
-        ) : (
+        {loadingPokemons || fetchingPokemons ? (
           <>
-            {dataPokemonByType?.map((pokemon) => {
-              return <ItemPokemon pokemon={pokemon} key={pokemon.name} />;
-            })}
+            <Loader />
           </>
-        )} */}
-        {(loadingPokemons || fetchingPokemons) && !dataPokemons ? (
-          <></>
         ) : (
           <>
             {dataPokemons?.data.map((pokemon) => {

@@ -4,6 +4,7 @@ import "./style.less";
 import { RdImage, useRdApp, useRdQuery } from "@radts/reactjs";
 import { AppRepository } from "@/applications/services/app-repository";
 import axios from "axios";
+import Loader from "@/components/loader/Loader";
 
 interface ItemPokemonProps {
   pokemon: PokemonItemEntity;
@@ -14,7 +15,7 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
   pokemon,
   selectedType,
 }) => {
-  const { data, isLoading, isError } = useRdQuery({
+  const { data, isLoading } = useRdQuery({
     queryKey: ["get-pokemon", selectedType.length, pokemon.name],
     queryFn: async () => {
       const rest = (await axios.get(`${pokemon.url}`)).data;
@@ -26,7 +27,7 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
         if (_types.length && selectedType.length === _types.length) {
           return rest;
         } else {
-          throw "error";
+          return null;
         }
       } else {
         return rest;
@@ -34,20 +35,22 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
     },
   });
 
-  if (isLoading || isError) {
-    return <></>;
+  if (isLoading) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
   }
-
-  console.log(data);
 
   return (
     <div onClick={() => {}} className="item-pokemon" key={pokemon.name}>
-      {data.sprites.other.showdown.front_shiny ||
-      data.sprites.other.official_artwork ? (
+      {data?.sprites?.other?.showdown?.front_shiny ||
+      data?.sprites?.other?.official_artwork ? (
         <img
           src={
-            data.sprites.other.showdown.front_shiny ??
-            data.sprites.other.official_artwork
+            data?.sprites?.other?.showdown?.front_shiny ??
+            data?.sprites?.other?.official_artwork
           }
         />
       ) : (
@@ -85,23 +88,25 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
           alignItems: "center",
         }}
       >
-        {data.types.map((d: any) => {
-          return (
-            <span
-              key={d.type.name}
-              style={{
-                backgroundColor: `${pokemonTypeColor.get(d.type.name)}`,
-                padding: "4px",
-                borderRadius: "24px",
-                color: "#FFFFFF",
-                fontSize: "12px",
-                fontWeight: "500",
-              }}
-            >
-              {d.type.name}
-            </span>
-          );
-        })}
+        {data &&
+          data?.types &&
+          data?.types.map((d: any) => {
+            return (
+              <span
+                key={d.type.name}
+                style={{
+                  backgroundColor: `${pokemonTypeColor.get(d.type.name)}`,
+                  padding: "4px",
+                  borderRadius: "24px",
+                  color: "#FFFFFF",
+                  fontSize: "12px",
+                  fontWeight: "500",
+                }}
+              >
+                {d.type.name}
+              </span>
+            );
+          })}
       </div>
 
       <div
@@ -113,9 +118,9 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
         }}
       >
         <span style={{ fontWeight: "600" }}>{pokemon.name}</span>
-        <span style={{ fontWeight: "400" }}>{` (${data.weight / 10}kg/${
-          data.height / 10
-        }m)`}</span>
+        <span style={{ fontWeight: "400" }}>{` (${
+          data?.weight ? data?.weight / 10 : "---"
+        }kg/${data?.height ? data?.height / 10 : "---"}m)`}</span>
       </div>
     </div>
   );
