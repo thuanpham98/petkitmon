@@ -5,14 +5,14 @@ import { PokemonRepository } from "../repositories/PokemonRepository";
 export class AppRepository extends RdModule {
   public readonly key: symbol;
 
-  public readonly lotus: PokemonRepository;
+  public readonly poke: PokemonRepository;
 
   constructor() {
     super();
     this.key = Symbol("AppRepository");
 
     // core bank
-    this.lotus = new PokemonRepository();
+    this.poke = new PokemonRepository();
 
     // asios
     axios.defaults.timeout = 120 * 1000;
