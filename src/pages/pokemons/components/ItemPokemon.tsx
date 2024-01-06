@@ -1,4 +1,4 @@
-import { PokemonItemEntity } from "@/domains/pokemons";
+import { PokemonItemEntity, pokemonTypeColor } from "@/domains/pokemons";
 import { FC } from "react";
 import "./style.less";
 import { RdImage, useRdApp, useRdQuery } from "@radts/reactjs";
@@ -23,7 +23,7 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
           const _type: string = e.type.name;
           return selectedType.includes(_type);
         });
-        if (_types.length) {
+        if (_types.length && selectedType.length === _types.length) {
           return rest;
         } else {
           throw "error";
@@ -37,6 +37,8 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
   if (isLoading || isError) {
     return <></>;
   }
+
+  console.log(data);
 
   return (
     <div onClick={() => {}} className="item-pokemon" key={pokemon.name}>
@@ -74,7 +76,47 @@ export const ItemPokemon: FC<ItemPokemonProps> = ({
           </defs>
         </svg>
       )}
-      <span>{pokemon.name}</span>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          gap: "8px",
+          alignItems: "center",
+        }}
+      >
+        {data.types.map((d: any) => {
+          return (
+            <span
+              key={d.type.name}
+              style={{
+                backgroundColor: `${pokemonTypeColor.get(d.type.name)}`,
+                padding: "4px",
+                borderRadius: "24px",
+                color: "#FFFFFF",
+                fontSize: "12px",
+                fontWeight: "500",
+              }}
+            >
+              {d.type.name}
+            </span>
+          );
+        })}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+          alignItems: "center",
+        }}
+      >
+        <span style={{ fontWeight: "600" }}>{pokemon.name}</span>
+        <span style={{ fontWeight: "400" }}>{` (${data.weight / 10}kg/${
+          data.height / 10
+        }m)`}</span>
+      </div>
     </div>
   );
 };

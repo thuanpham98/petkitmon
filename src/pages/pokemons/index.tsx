@@ -76,6 +76,16 @@ const PokemonsPage = () => {
     setState();
   }
 
+  function onSelecType(name: string) {
+    if (state.selectedType.includes(name)) {
+      state.selectedType = state.selectedType.filter((e) => e !== name);
+      setState();
+    } else if (state.selectedType.length < 2) {
+      state.selectedType.push(name);
+      setState();
+    }
+  }
+
   if (loadingType) {
     return <></>;
   }
@@ -86,16 +96,9 @@ const PokemonsPage = () => {
         {dataType &&
           dataType.map((d) => {
             return (
-              <div
+              <button
                 onClick={() => {
-                  if (state.selectedType.includes(d.name)) {
-                    state.selectedType = state.selectedType.filter(
-                      (e) => e !== d.name,
-                    );
-                  } else {
-                    state.selectedType.push(d.name);
-                  }
-                  setState();
+                  onSelecType(d.name);
                 }}
                 style={{
                   borderColor: state.selectedType.includes(d.name)
@@ -115,10 +118,10 @@ const PokemonsPage = () => {
                 >
                   {d.name}
                 </span>
-              </div>
+              </button>
             );
           })}
-        <div
+        {/* <div
           className="item"
           style={{
             transition: "none",
@@ -135,7 +138,7 @@ const PokemonsPage = () => {
             style={{ width: "48px", height: "48px", cursor: "pointer" }}
             src={`${Environment.host}/icons/ic-reset.svg`}
           />
-        </div>
+        </div> */}
       </div>
 
       {!loadingPokemons && dataPokemons && (
