@@ -108,7 +108,9 @@ const PokemonsPage = () => {
                 className="item"
                 key={d.name}
               >
-                <img src={`./icons/pokemon-types/${d.name}.svg`} />
+                <img
+                  src={`${Environment.host}/icons/pokemon-types/${d.name}.svg`}
+                />
                 <span
                   style={{
                     color: `${pokemonTypeColor.get(d.name)}`,
