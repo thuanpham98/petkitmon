@@ -133,6 +133,18 @@ const PokemonsPage = () => {
           defaultCurrent={state.page}
           defaultPageSize={state.pageSize}
           total={dataPokemons.total}
+          showTotal={(total, range) => (
+            <span
+              style={{
+                color: "#333333",
+                fontSize: "16px",
+                fontWeight: "400",
+              }}
+            >
+              {`${range[0]}-${range[1]}`} of
+              <span style={{ fontWeight: "600" }}> {`${total} pokemons`}</span>
+            </span>
+          )}
         />
       )}
 

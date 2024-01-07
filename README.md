@@ -1,5 +1,7 @@
 ### Architecture : Domain driven design.
 
+### Rule of selecting Pokemon type : can only select 2 type of Pokemon.
+
 ## How to run dev?
 
 ### Step 1 : copy this into .env
