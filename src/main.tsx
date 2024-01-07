@@ -5,7 +5,7 @@ import { AppRepository } from "./applications/services/app-repository";
 import { appRouterConfig } from "./router";
 import { RouterProvider } from "react-router-dom";
 
-console.debug("version 1");
+console.debug("version 1.0.1");
 const rdManager = new RdModulesManager<RdModule>().use(new AppRepository());
 const router = appRouterConfig(rdManager);
 
