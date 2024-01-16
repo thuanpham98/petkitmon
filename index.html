@@ -3,12 +3,126 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite + Vue + TS</title>
+  <link rel="icon" href=/favicon.ico />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+  <link rel="apple-touch-icon" href=/apple-touch-icon.png />
+  <link rel="icon" type="image/png" sizes="32x32" href=/favicon-32x32.png />
+  <link rel="icon" type="image/png" sizes="16x16" href=/favicon-16x16.png />
+  <link rel="manifest" href=/manifest.json />
+
+  <meta name="title" content="Petkitmon" />
+  <meta name="description" content="Petkitmon for people" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://thuanpham98.github.io/petkitmon" />
+  <meta property="og:title" content="Petkitmon" />
+  <meta property="og:description" content="Petkitmon for people" />
+  <meta property="og:image" content="https://thuanpham98.github.io/petkitmon/meta-tag.webp" />
+  <meta property="og:image:secure_url" content="https://thuanpham98.github.io/petkitmon/meta-tag.webp" />
+
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://thuanpham98.github.io/petkitmon" />
+  <meta property="twitter:title" content="Petkitmon" />
+  <meta property="twitter:description" content="Petkitmon for people" />
+  <meta property="twitter:image" content="https://thuanpham98.github.io/petkitmon/meta-tag.webp" />
+
+  <title>Petkitmon</title>
+
+  <style>
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 100;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Ultralight.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 200;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Thin.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 300;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Light.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 400;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Regular.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 500;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Medium.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 600;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Semibold.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 700;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Bold.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 800;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Heavy.otf) format("opentype");
+    }
+
+    @font-face {
+      font-family: "SF-Pro-Text";
+      font-weight: 900;
+      font-style: normal;
+      src: url(fonts/SF-Pro-Text-Black.otf) format("opentype");
+    }
+
+    html,
+    body,
+    body * {
+      box-sizing: border-box;
+      margin: 0px;
+      padding: 0px;
+      font-family: "SF-Pro-Text", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif !important;
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased !important;
+      -webkit-tap-highlight-color: #ad020200;
+      scroll-behavior: smooth;
+    }
+  </style>
+
+  <link rel="preload" href="fonts/SF-Pro-Text-Ultralight.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Light.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Thin.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Regular.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Medium.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Bold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Semibold.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Heavy.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/SF-Pro-Text-Black.otf" as="font" type="font/otf" crossorigin>
 </head>
 
-<body>
+<body style="background-color: #00000000;">
   <div id="app"></div>
   <script type="module" src="/src/main.ts"></script>
 </body>
